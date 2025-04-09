@@ -25,24 +25,21 @@ void data_task(void *p) {
 
 void process_task(void *p) {
     int data = 0;
-    int buffer[5];
+    int buffer[5] = {0};
     int index = 0;        
-    int count = 0;
 
     while (true) {
         if (xQueueReceive(xQueueData, &data, 100)) {
+
             buffer[index] = data;
             index = (index + 1) % 5;
-            if (count < 5) {
-                count++;  
-            } 
-
+        
             int soma = 0;
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < 5; i++) {
                 soma += buffer[i];
             }
 
-            int media = soma / count;
+            int media = soma / 5;
 
             printf("Filtrado: %d\n", media);
 
